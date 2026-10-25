@@ -1,0 +1,12 @@
+__pycache__/
+*.py[cod]
+venv/
+.env
+database/*.db
+.DS_Store
+.vscode/
+.idea/
+.claude/
+.pytest_cache/
+
+# NOTE: screenshots/*.png are intentionally committed — the report embeds them.
