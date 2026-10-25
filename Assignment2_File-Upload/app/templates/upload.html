@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Secure File Upload</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <main class="container">
+        <header>
+            <h1>📁 Secure File Upload</h1>
+            <a href="{{ url_for('logout') }}" class="logout-link">Log out</a>
+        </header>
+
+        {# Flash messages #}
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="flashes">
+            {% for category, message in messages %}
+            <p class="flash flash-{{ category }}">{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <section class="upload-section">
+            <form method="POST" enctype="multipart/form-data" action="{{ url_for('upload_page') }}">
+                {# CSRF token – security control 9 #}
+                <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+                <label for="file">Choose a file to upload</label>
+                <input type="file" id="file" name="file" required>
+
+                <p class="rules">
+                    Allowed types: <strong>PNG, JPG, JPEG, GIF, PDF, TXT</strong><br>
+                    Maximum size: <strong>2 MB</strong>
+                </p>
+
+                <button type="submit">Upload</button>
+            </form>
+        </section>
+
+        {% if uploaded %}
+        <section class="file-list">
+            <h2>Uploaded Files</h2>
+            <ul>
+                {% for f in uploaded %}
+                <li>
+                    <span class="filename">{{ f }}</span>
+                    <a href="{{ url_for('download_file', filename=f) }}" class="download-btn">Download</a>
+                </li>
+                {% endfor %}
+            </ul>
+        </section>
+        {% endif %}
+    </main>
+</body>
+</html>

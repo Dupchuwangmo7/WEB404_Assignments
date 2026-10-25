@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login – Secure Upload</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <main class="container">
+        <h1>🔐 Secure Upload – Login</h1>
+
+        {# Flash messages #}
+        {% with messages = get_flashed_messages(with_categories=true) %}
+        {% if messages %}
+        <div class="flashes">
+            {% for category, message in messages %}
+            <p class="flash flash-{{ category }}">{{ message }}</p>
+            {% endfor %}
+        </div>
+        {% endif %}
+        {% endwith %}
+
+        <form method="POST" action="{{ url_for('login') }}">
+            {# CSRF token – security control 9 #}
+            <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+
+            <label for="username">Username</label>
+            <input type="text" id="username" name="username" required autofocus>
+
+            <label for="password">Password</label>
+            <input type="password" id="password" name="password" required>
+
+            <button type="submit">Log in</button>
+        </form>
+
+        <p class="hint">Demo credentials: <code>admin</code> / <code>secure123</code></p>
+    </main>
+</body>
+</html>
