@@ -1,0 +1,8 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1.0"><title>Dashboard – JWT Lab</title>
+<style>*{box-sizing:border-box;margin:0;padding:0}body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#f0f2f5;color:#1d1d1f;line-height:1.6;padding:2rem 1rem}.container{max-width:560px;margin:0 auto;background:#fff;border-radius:12px;padding:2rem;box-shadow:0 2px 12px rgba(0,0,0,.08)}h1{font-size:1.3rem;margin-bottom:.5rem}.info{background:#d4edda;color:#155724;padding:.7rem .9rem;border-radius:6px;font-size:.9rem;margin:.8rem 0}.claims{background:#f4f4f4;padding:.8rem;border-radius:6px;font-family:monospace;font-size:.85rem;margin:.8rem 0;word-break:break-all}.flash{padding:.5rem .7rem;border-radius:6px;font-size:.88rem;margin-bottom:.8rem}.flash-success{background:#d4edda;color:#155724}a{color:#0071e3;text-decoration:none;font-size:.9rem}a:hover{text-decoration:underline}</style>
+</head><body><div class="container"><h1>📊 Dashboard</h1>
+{% with messages = get_flashed_messages(with_categories=true) %}{% if messages %}{% for cat, msg in messages %}<p class="flash flash-{{ cat }}">{{ msg }}</p>{% endfor %}{% endif %}{% endwith %}
+<div class="info">✅ Authenticated as <strong>{{ username }}</strong> (role: <strong>{{ role }}</strong>)</div>
+<div class="claims"><strong>JWT claims decoded by server:</strong><br>sub: {{ username }}<br>role: {{ role }}<br>(Token in HttpOnly cookie — not accessible to JavaScript)</div>
+<p><a href="/api/profile">View API profile (JSON)</a> · <a href="/logout">Log out</a></p>
+</div></body></html>

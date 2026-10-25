@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DNS Lookup – Command Injection Lab</title>
+    <style>
+        *{box-sizing:border-box;margin:0;padding:0}
+        body{font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,sans-serif;background:#f0f2f5;color:#1d1d1f;line-height:1.6;padding:2rem 1rem}
+        .container{max-width:560px;margin:0 auto;background:#fff;border-radius:12px;padding:2rem;box-shadow:0 2px 12px rgba(0,0,0,.08)}
+        h1{font-size:1.3rem;margin-bottom:.5rem}
+        .subtitle{font-size:.88rem;color:#666;margin-bottom:1rem}
+        label{display:block;font-weight:500;margin-bottom:.3rem;font-size:.95rem}
+        input[type="text"]{width:100%;padding:.5rem .7rem;border:1px solid #ccc;border-radius:6px;font-size:.95rem;margin-bottom:.8rem}
+        button{background:#0071e3;color:#fff;border:none;padding:.55rem 1.4rem;border-radius:6px;font-size:.95rem;cursor:pointer}
+        button:hover{background:#005bb5}
+        .flash{padding:.6rem .85rem;border-radius:6px;font-size:.9rem;margin-bottom:.8rem}
+        .flash-success{background:#d4edda;color:#155724}
+        .flash-danger{background:#f8d7da;color:#721c24}
+        .result-box{background:#f4f4f4;padding:.8rem;border-radius:6px;font-family:monospace;font-size:.85rem;margin-top:.8rem;word-break:break-all}
+        .security-note{font-size:.82rem;color:#888;margin-top:1rem;padding:.5rem;background:#f9f9f9;border-radius:6px}
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1>🔍 DNS Lookup Tool</h1>
+    <p class="subtitle">Enter a hostname to resolve its IP address (secure implementation).</p>
+
+    {% with messages = get_flashed_messages(with_categories=true) %}
+    {% if messages %}{% for cat, msg in messages %}<p class="flash flash-{{ cat }}">{{ msg }}</p>{% endfor %}{% endif %}
+    {% endwith %}
+
+    <form method="POST">
+        <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+        <label for="hostname">Hostname</label>
+        <input type="text" id="hostname" name="hostname" value="{{ hostname }}"
+               placeholder="e.g. example.com" autocomplete="off" required>
+        <button type="submit">Look up</button>
+    </form>
+
+    {% if result and result.success %}
+    <div class="result-box">
+        <strong>Result:</strong><br>
+        Hostname: {{ result.hostname }}<br>
+        IP Address: {{ result.ip }}
+    </div>
+    {% endif %}
+
+    <p class="security-note">
+        🔒 This form uses Python's <code>socket.gethostbyname()</code> — no shell commands
+        are executed. Input is validated against a strict hostname allowlist.
+        Shell metacharacters like <code>;</code> <code>|</code> <code>&amp;</code> are rejected.
+    </p>
+</div>
+</body>
+</html>

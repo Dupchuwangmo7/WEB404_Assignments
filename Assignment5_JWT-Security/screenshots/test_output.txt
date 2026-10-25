@@ -1,0 +1,29 @@
+============================= test session starts ==============================
+platform darwin -- Python 3.14.6, pytest-8.3.5, pluggy-1.7.0 -- /Users/dupchuuw/Desktop/sem7/WEB404_Assignments/Assignment5_JWT-Security/venv/bin/python
+cachedir: .pytest_cache
+rootdir: /Users/dupchuuw/Desktop/sem7/WEB404_Assignments/Assignment5_JWT-Security
+collecting ... collected 21 items
+
+tests/test_jwt_security.py::TestValidAuth::test_correct_credentials_return_user PASSED [  4%]
+tests/test_jwt_security.py::TestValidAuth::test_create_and_verify_token PASSED [  9%]
+tests/test_jwt_security.py::TestValidAuth::test_login_sets_cookie PASSED [ 14%]
+tests/test_jwt_security.py::TestValidAuth::test_dashboard_accessible_with_token PASSED [ 19%]
+tests/test_jwt_security.py::TestInvalidCredentials::test_wrong_password PASSED [ 23%]
+tests/test_jwt_security.py::TestInvalidCredentials::test_nonexistent_user PASSED [ 28%]
+tests/test_jwt_security.py::TestInvalidCredentials::test_login_returns_401 PASSED [ 33%]
+tests/test_jwt_security.py::TestExpiredToken::test_expired_token_rejected PASSED [ 38%]
+tests/test_jwt_security.py::TestExpiredToken::test_expired_cookie_redirects PASSED [ 42%]
+tests/test_jwt_security.py::TestTamperedToken::test_modified_payload_rejected PASSED [ 47%]
+tests/test_jwt_security.py::TestTamperedToken::test_tampered_cookie_rejected PASSED [ 52%]
+tests/test_jwt_security.py::TestMissingToken::test_no_cookie_returns_401 PASSED [ 57%]
+tests/test_jwt_security.py::TestMissingToken::test_dashboard_redirects_to_login PASSED [ 61%]
+tests/test_jwt_security.py::TestInvalidSignature::test_wrong_key_rejected PASSED [ 66%]
+tests/test_jwt_security.py::TestAlgorithmConfusion::test_none_algorithm_rejected PASSED [ 71%]
+tests/test_jwt_security.py::TestAlgorithmConfusion::test_hs384_rejected PASSED [ 76%]
+tests/test_jwt_security.py::TestMissingClaims::test_missing_sub_rejected PASSED [ 80%]
+tests/test_jwt_security.py::TestMissingClaims::test_missing_role_rejected PASSED [ 85%]
+tests/test_jwt_security.py::TestTokenRevocation::test_revoked_token_rejected PASSED [ 90%]
+tests/test_jwt_security.py::TestTokenRevocation::test_logout_clears_cookie PASSED [ 95%]
+tests/test_jwt_security.py::TestProtectedRoute::test_api_returns_json_with_valid_token PASSED [100%]
+
+============================== 21 passed in 4.20s ==============================
